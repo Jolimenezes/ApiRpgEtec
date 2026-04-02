@@ -8,7 +8,7 @@ namespace ApiRpgEtec.Services.Usuarios
     public class UsuariosServices : Request
     {
         private readonly Request _request;
-        private const string apiUrlBase = "joli.somee.com/RpgApi/Usuarios";
+        private const string apiUrlBase = "http://joli.somee.com/RpgApi/Usuarios";
 
         public UsuariosServices()
         {
@@ -25,7 +25,7 @@ namespace ApiRpgEtec.Services.Usuarios
 
         public async Task<Usuario> PostAutentificarUsuarioAsync(Usuario u)
         {
-            string urlComplementar = "/Autentificar";
+            string urlComplementar = "/Autenticar";
             u = await _request.PostAsync(apiUrlBase + urlComplementar, u, string.Empty);
 
             return u;
