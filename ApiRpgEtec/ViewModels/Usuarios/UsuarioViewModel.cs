@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using ApiRpgEtec.Services.Usuarios;
 using ApiRpgEtec.Views.Usuarios;
+using ApiRpgEtec.Views.Personagens;
 
 namespace ApiRpgEtec.ViewModels.Usuarios
 {
@@ -72,7 +73,7 @@ namespace ApiRpgEtec.ViewModels.Usuarios
 
                     await Application.Current.MainPage.DisplayAlert("Informação", mensagem, "Ok");
 
-                    Application.Current.MainPage = new MainPage();
+                    Application.Current.MainPage = new ListagemView();
                 }
                 else
                 {
