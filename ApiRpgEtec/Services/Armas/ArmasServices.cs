@@ -18,13 +18,13 @@ namespace ApiRpgEtec.Services.Armas
             _token = token;
         }
 
-        public async Task<ObservableCollection<Personagem>> GetArmasAsync()
+        public async Task<ObservableCollection<Arma>> GetArmasAsync()
         {
             string urlComplementar = string.Format("{0}", "/GetAll");
-            ObservableCollection listaPersonagens = await
-            _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar,
+            ObservableCollection<Models.Arma> listaArma = await
+            _request.GetAsync<ObservableCollection<Models.Arma>>(apiUrlBase + urlComplementar,
             _token);
-            return listaArmas;
+            return listaArma;
         }
     }
 }

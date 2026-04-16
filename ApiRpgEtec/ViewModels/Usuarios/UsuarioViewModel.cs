@@ -6,7 +6,9 @@ using System.Windows.Input;
 using Newtonsoft.Json;
 using ApiRpgEtec.Services.Usuarios;
 using ApiRpgEtec.Views.Usuarios;
-using ApiRpgEtec.Views.Personagens;
+//using ApiRpgEtec.Views.Personagens;
+using ApiRpgEtec.Views.Armas;
+
 
 namespace ApiRpgEtec.ViewModels.Usuarios
 {

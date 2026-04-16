@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppRpgEtec.Models
+namespace ApiRpgEtec.Models
 {
     public class Arma
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public int Dano { get; set; }        
+        public int Dano { get; set; }
     }
-
 }
