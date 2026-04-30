@@ -21,9 +21,11 @@ namespace ApiRpgEtec.ViewModels.Personagens
             _ = ObterPersonagem();
 
             NovoPersonagemCommand = new Command(async () => { await ExibirCadastroPersonagem(); });
+            RemoverPersonagemCommand = new Command<Personagem>(async (Personagem p) => { await RemoverPersonagem(p); });
         }
 
         public ICommand NovoPersonagemCommand { get; }
+        public ICommand RemoverPersonagemCommand { get; set;  }
 
         public async Task ObterPersonagem()
         {
@@ -43,6 +45,41 @@ namespace ApiRpgEtec.ViewModels.Personagens
             try
             {
                 await Shell.Current.GoToAsync("cadPersonagemView");
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Ops", ex.Message + " Detalhes: " + ex.InnerException, "Ok");
+            }
+        }
+
+        private Personagem personagemSelecionado;
+
+        public Personagem PersonagemSelecionado
+        {
+            get { return personagemSelecionado; }
+            set
+            {
+                if (value != null)
+                {
+                    personagemSelecionado = value;
+
+                    Shell.Current.GoToAsync($"cadPersonagemView?Id={personagemSelecionado.Id}");
+                }
+            }
+        }
+
+        public async Task RemoverPersonagem(Personagem p)
+        {
+            try 
+            {
+                if (await Application.Current.MainPage.DisplayAlert("Confirmação", $"Deseja remover o personagem {p.Nome}?", "Sim", "Não"))
+                {
+                    await pService.DeletePersonagemAsync(p.Id);
+                    
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", $"Personagem {p.Nome} removido com sucesso!", "Ok");
+
+                    _ = ObterPersonagem();
+                }
             }
             catch (Exception ex)
             {
