@@ -7,6 +7,10 @@ namespace ApiRpgEtec
         public AppShell()
         {
             InitializeComponent();
+
+            string login = Preferences.Get("UsuarioUserName", string.Empty);
+            lblLogin.Text = login;
+
             Routing.RegisterRoute("cadPersonagemView", typeof(CadastroPersonagemView));
         }
     }
