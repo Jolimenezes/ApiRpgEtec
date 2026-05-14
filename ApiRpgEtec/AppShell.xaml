@@ -40,7 +40,7 @@ HeightRequest="80" WidthRequest="80" >
     
         <ShellContent
         Title="Usuarios" Icon="calculating.png"
-        ContentTemplate="{DataTemplate viewsUsuarios:ListagemView}" />
+        ContentTemplate="{DataTemplate viewsUsuarios:LocalizacaoView}" />
 
         <ShellContent Icon="what.png"
         Title="Personagens"
