@@ -48,5 +48,15 @@ namespace ApiRpgEtec.Services.Personagens
             var result = await _request.DeleteAsync(apiUrlBase + urlComplementar, _token);
             return result;
         }
+        public async Task<ObservableCollection<Personagem>> GetByNomeAproximadoAsync(string busca)
+        {
+            string urlComplementar = $"/GetByNomeAproximado/{busca}";
+
+            ObservableCollection<Models.Personagem> listaPersonagens = await
+            _request.GetAsync<ObservableCollection<Models.Personagem>>(apiUrlBase + urlComplementar,
+            _token);
+
+            return listaPersonagens;
+        }
     }
 }

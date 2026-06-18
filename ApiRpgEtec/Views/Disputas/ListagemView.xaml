@@ -3,10 +3,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ApiRpgEtec.Views.Disputas.ListagemView"
              Title="ListagemView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <SearchBar x:Name="searchBar" HeightRequest="25" Placeholder="Digite o nome do Personagem..."
+                   TextColor="Black" SearchCommand="{Binding PesquisarPersonagensCommand}"
+                   SearchCommandParameter="{Binding Source={x:Reference searchBar}, Path=Text}"
+                   Grid.Row="0"/>
+
+        <Entry Placeholder="Digite o nome do Personagem..." Text="{Binding TextoBuscadoDigitado}"
+               Grid.Row="1"/>
+
+        <CollectionView x:Name="lvPersonagens"
+                        ItemsSource="{Binding PersonagensEncontrados}"
+                        SelectedItem="{Binding PersonagemSelecionado, Mode=TwoWay}"
+                        Margin="10, 5, 0, 0"
+                        SelectionMode="Single"
+                        ItemSizingStrategy="MeasureAllItems"
+                        Grid.Row="2">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="0" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical" Padding="0,6">
+                        <Label Text="{Binding Id}" TextColor="Blue" IsVisible="False"/>
+                        <Label Text="{Binding Nome}" TextColor="Blue" FontSize="18"/>
+                        <Label Text="{Binding Classe}" TextColor="Blue" FontSize="14"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid HorizontalOptions="Fill" Margin="5, 5, 0, 0" Padding="10, 10, 0, 0" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <!-- change last row to star to allow expansion instead of FillAndExpand -->
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="Atacante: " Grid.Column="0" Grid.Row="0" FontAttributes="Bold" />
+            <Label Text="{Binding DescricaoPersonagemAtacante}" Grid.Column="1" Grid.Row="0" TextColor="Blue" />
+
+            <Label Text="Oponente: " Grid.Column="0" Grid.Row="1" FontAttributes="Bold" />
+            <Label Text="{Binding DescricaoPersonagemOponente}" Grid.Column="1" Grid.Row="1" TextColor="Blue" />
+
+            <Button Text="Disputar com Arma" FontAttributes="Bold"
+                    Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                    Command="{Binding DisputaComArmaCommand}"/>
+
+            <Picker Title="---Selecione a habilidade do Atacante---"
+                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                    ItemsSource="{Binding HabilidadesAtacante}"
+                    ItemDisplayBinding="{Binding HabilidadeNome}"
+                    SelectedItem="{Binding HabilidadeAtacanteSelecionada}" />
+
+            <Picker Title="---Selecione a habilidade do Oponente---"
+                    Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                    ItemsSource="{Binding HabilidadesOponente}"
+                    ItemDisplayBinding="{Binding HabilidadeNome}"
+                    SelectedItem="{Binding HabilidadeOponenteSelecionada}" />
+
+            <Button Text="Disputas com Habilidades" FontAttributes="Bold"
+                    Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
+                    Command="{Binding DisputaComHabilidadeCommand}"/>
+
+            <Button Text="Disputa Geral" FontAttributes="Bold"
+                    Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"
+                    Command="{Binding DisputaGeralCommand}"/>
+        </Grid>
+
+    </Grid>
 </ContentPage>

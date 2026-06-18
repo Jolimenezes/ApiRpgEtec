@@ -6,8 +6,15 @@
     xmlns:viewsUsuarios ="clr-namespace:ApiRpgEtec.Views.Usuarios"
     xmlns:viewsPersonagens ="clr-namespace:ApiRpgEtec.Views.Personagens"
     xmlns:viewsDisputas ="clr-namespace:ApiRpgEtec.Views.Disputas"
+    xmlns:conv="clr-namespace:ApiRpgEtec.Converters"
     xmlns:local="clr-namespace:ApiRpgEtec"
     Title="ApiRpgEtec">
+    
+    <Shell.Resources>
+        <ResourceDictionary>
+            <conv:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
+        </ResourceDictionary>
+    </Shell.Resources>
 
     <Shell.FlyoutHeaderTemplate>
         <DataTemplate>
@@ -18,9 +25,8 @@
                     <RowDefinition Height="40"></RowDefinition>
                 </Grid.RowDefinitions>
                 <FlexLayout Grid.Row="0" Direction="Row" AlignItems="Center" >
-                    <Border Padding="0" StrokeShape="RoundRectangle 40"
-HeightRequest="80" WidthRequest="80" >
-                        <Image/>
+                    <Border Padding="20" StrokeShape="RoundRectangle 40" HeightRequest="80" WidthRequest="80">
+                        <Image Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}" />
                     </Border>
                     <VerticalStackLayout Padding="10,0,0,0" Spacing="0">
                         <Label Text="App RPG Etec" FontAttributes="Bold" FontSize="Medium" />
@@ -51,6 +57,8 @@ HeightRequest="80" WidthRequest="80" >
         ContentTemplate="{DataTemplate viewsDisputas:ListagemView}" />
 
         <Tab Title="Info" Route="info" Icon="processing.png">
+            <ShellContent Title="Usuário" Route="usuario" ContentTemplate="{DataTemplate viewsUsuarios:ImagemUsuarioView}"/>
+            
             <ShellContent Title="Sobre" Route="sobre" ContentTemplate="{DataTemplate local:AboutView}"/>
 
             <ShellContent Title="Descrição" Route="desc" ContentTemplate="{DataTemplate local:DescriptionView}"/>
