@@ -1,6 +1,7 @@
 ﻿using ApiRpgEtec.Models;
 using ApiRpgEtec.Services.Usuarios;
 using Azure.Storage.Blobs;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +12,12 @@ namespace ApiRpgEtec.ViewModels.Usuarios
     public class ImagemUsuarioViewModel : BaseViewModel
     {
         private UsuariosServices uService;
-        private static string conexaoAzureStorage = "DefaultEndpointsProtocol=https;AccountName=angelostorage;AccountKey=+Tsp6lH1hKHaKEwlvKQsBP07JSceJCJUJZQJQboH+YYi+JOMEZnxxamX76WlQMRIQ2dlvc/oC/99+AStWetYVQ==;EndpointSuffix=core.windows.net";
+        private readonly string conexaoAzureStorage;
         private static string container = "arquivos";
 
-        public ImagemUsuarioViewModel()
+        public ImagemUsuarioViewModel(IConfiguration configuration)
         {
+            conexaoAzureStorage = configuration.GetConnectionString("AzureStorage");
             string token = Preferences.Get("UsuarioToken", string.Empty);
             uService = new UsuariosServices(token);
 

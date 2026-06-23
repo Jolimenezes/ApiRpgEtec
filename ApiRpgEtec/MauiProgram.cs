@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace ApiRpgEtec
 {
@@ -15,8 +17,24 @@ namespace ApiRpgEtec
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 }).UseMauiMaps();
 
+            // --- CÓDIGO PARA LER O JSON EMBUTIDO CORRIGIDO ---
+            var assembly = Assembly.GetExecutingAssembly();
+
+            // Ajustado para o namespace real do seu projeto: ApiRpgEtec
+            using var stream = assembly.GetManifestResourceStream("ApiRpgEtec.appsettings.local.json");
+
+            if (stream != null)
+            {
+                var config = new ConfigurationBuilder()
+                    .AddJsonStream(stream) // Agora o VS vai reconhecer este método!
+                    .Build();
+
+                builder.Configuration.AddConfiguration(config);
+            }
+            // -------------------------------------------------
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
