@@ -22,7 +22,7 @@ namespace ApiRpgEtec.ViewModels.Personagens
             pService = new PersonagemService(token);
             _ = ObterClasses();
 
-            SalvarCommand = new Command(async () => { await SalvarPersonagem(); });
+            SalvarCommand = new Command(async () => { await SalvarPersonagem(); }, () => ValidarCampos());
             CancelarCommand = new Command(async () => CancelarCadastro());
         }
 
@@ -52,6 +52,7 @@ namespace ApiRpgEtec.ViewModels.Personagens
             {
                 nome = value;
                 OnPropertyChanged();
+                ((Command)SalvarCommand).ChangeCanExecute();
             }
         }
         public int PontosVida
@@ -61,6 +62,8 @@ namespace ApiRpgEtec.ViewModels.Personagens
             {
                 pontosVida = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CadastroHabilitado));
+                ((Command)SalvarCommand).ChangeCanExecute();
             }
         }
         public int Forca
@@ -70,6 +73,7 @@ namespace ApiRpgEtec.ViewModels.Personagens
             {
                 forca = value;
                 OnPropertyChanged();
+                ((Command)SalvarCommand).ChangeCanExecute();
             }
         }
         public int Defesa
@@ -78,6 +82,7 @@ namespace ApiRpgEtec.ViewModels.Personagens
             {
                 defesa = value;
                 OnPropertyChanged();
+                ((Command)SalvarCommand).ChangeCanExecute();
             }
         }
         public int Inteligencia
@@ -127,6 +132,22 @@ namespace ApiRpgEtec.ViewModels.Personagens
                 }
             }
 
+        }
+
+        public bool CadastroHabilitado
+        {
+            get
+            {
+                return (PontosVida > 0);
+            }
+        }
+
+         public bool ValidarCampos()
+        {
+            return !string.IsNullOrEmpty(Nome)
+                && CadastroHabilitado
+                && Forca != 0
+                && Defesa != 0;
         }
 
         public async Task ObterClasses()
